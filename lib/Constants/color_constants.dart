@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+Color primaryColor=const Color(0xff7E54A0);
+Color backGroundColor=const Color(0xFFF3F3F7);
+
+Color secondaryColor=const Color(0xFF11B9AC);
+Color darkBorderColor=const Color(0xFFABABAB);
+Color lightBorderColor=const Color(0xffE2E2E2);
+Color lineColor=const Color(0xff6F6F6F);
+Color otpBorderColor=const Color(0xff674FA3);
+Color normalTextColor=const Color(0xff6E6C6F);
+Color boldTextColor=const Color(0xff000000);
+Color dashboardTextColor=const Color(0xff4E4E4E);
+Color bannerColor=const Color(0xff2EC0B5);
+Color getafr=const Color(0xff737373);
+Color white=const Color(0xffFFFFFF);
+ Color registerMemberShipContainerColor = const Color(0xffFFCB08);
+Color memberBtnColor = const Color(0xFF674FA3);
+Color redColor = Color(0xffFF0000);
+Color borderColor = const Color(0xffE9E9E9);
+Color blackColor = Colors.black;
+Color switchColor = const Color(0xff674FA3);
+Color textColor = const Color(0xff161616);
+Color slotBottomSheet = const Color(0xff0bad9d9d9);
