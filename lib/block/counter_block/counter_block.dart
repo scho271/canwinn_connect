@@ -1,5 +1,5 @@
-import 'package:canwinn_project/block/counter_events.dart';
-import 'package:canwinn_project/block/counter_state.dart';
+import 'package:canwinn_project/block/counter_block/counter_events.dart';
+import 'package:canwinn_project/block/counter_block/counter_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CounterBlock extends Bloc<CounterEvent , CounterStates>{

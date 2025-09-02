@@ -1,9 +1,9 @@
 import 'package:canwinn_project/Constants/color_constants.dart';
 import 'package:canwinn_project/View/applience_repair/home_services/add_cart_screens.dart';
 import 'package:canwinn_project/ViewModel/Controller/get_categories_controller.dart';
-import 'package:canwinn_project/block/counter_block.dart';
-import 'package:canwinn_project/block/counter_events.dart';
-import 'package:canwinn_project/block/counter_state.dart';
+import 'package:canwinn_project/block/counter_block/counter_block.dart';
+import 'package:canwinn_project/block/counter_block/counter_events.dart';
+import 'package:canwinn_project/block/counter_block/counter_state.dart';
 import 'package:canwinn_project/modules/get_subcategroy_modules_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

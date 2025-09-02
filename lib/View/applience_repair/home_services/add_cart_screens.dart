@@ -1,7 +1,7 @@
 import 'package:canwinn_project/Constants/color_constants.dart';
-import 'package:canwinn_project/block/counter_block.dart';
-import 'package:canwinn_project/block/counter_events.dart';
-import 'package:canwinn_project/block/counter_state.dart';
+import 'package:canwinn_project/block/counter_block/counter_block.dart';
+import 'package:canwinn_project/block/counter_block/counter_events.dart';
+import 'package:canwinn_project/block/counter_block/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';

@@ -1,7 +1,6 @@
-
-
 import 'package:canwinn_project/View/Splash.dart';
-import 'package:canwinn_project/block/counter_block.dart';
+import 'package:canwinn_project/block/bottom_nav/block/bottom_nav_block.dart';
+import 'package:canwinn_project/block/counter_block/counter_block.dart';
 import 'package:canwinn_project/helper/storage_helper.dart';
 import 'package:canwinn_project/res/localizations/language.dart';
 import 'package:canwinn_project/res/routes/routes.dart';
@@ -23,17 +22,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CounterBlock(),
-      child: ScreenUtilInit(
-        designSize: const Size(360, 760),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
-          getPages: AppRoutes.openRoutes(),
-          translations: Language(),
-          locale: const Locale('en', 'US'),
-          fallbackLocale: const Locale('en', 'US'),
+      child: BlocProvider(
+        create: (context) => BottomNavBlock(),
+        child: ScreenUtilInit(
+          designSize: const Size(360, 760),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(),
+            getPages: AppRoutes.openRoutes(),
+            translations: Language(),
+            locale: const Locale('en', 'US'),
+            fallbackLocale: const Locale('en', 'US'),
+          ),
         ),
       ),
     );
