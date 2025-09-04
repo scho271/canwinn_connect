@@ -146,7 +146,7 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              border: BoxBorder.all(width: 1),
+                              border: Border.all(width: 1),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.3),

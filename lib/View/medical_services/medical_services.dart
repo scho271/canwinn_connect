@@ -212,7 +212,7 @@ class _MedicalServicesState extends State<MedicalServices> {
                        Get.to(MedicalServicesDetails());
                      },
                      style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFE8F2F2),shape: RoundedRectangleBorder(
-                       borderRadius: BorderRadiusGeometry.circular(10)
+                       borderRadius:BorderRadius.circular(10)
                      )), child: Text("book_now".tr,style: TextStyle(fontFamily: 'Lexend',fontSize: 14,),),),
                     ),
                   );
