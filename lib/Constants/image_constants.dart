@@ -59,3 +59,4 @@ const medicalService ="assets/images/medical_service.png";
 const bloodTest ="assets/images/blood_test.png";
 const ambulence ="assets/images/ambulience.png";
 const medicalDetails = "assets/images/medical_details.jpg";
+const burggerImage="assets/images/burger.png";

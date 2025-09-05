@@ -1,28 +1,22 @@
 import 'package:canwinn_project/Constants/color_constants.dart';
-import 'package:canwinn_project/View/applience_repair/home_services/add_cart_screens.dart';
-import 'package:canwinn_project/ViewModel/Controller/get_categories_controller.dart';
-import 'package:canwinn_project/block/counter_block.dart';
-import 'package:canwinn_project/block/counter_events.dart';
-import 'package:canwinn_project/block/counter_state.dart';
-import 'package:canwinn_project/modules/get_subcategroy_modules_data.dart';
+import 'package:canwinn_project/Constants/image_constants.dart';
+import 'package:canwinn_project/ViewModel/Controller/hospital_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/get_utils/get_utils.dart';
 
-class HomeServicesCart extends StatefulWidget {
-  final List<Service> serviceCartData;
-  const HomeServicesCart({super.key, required this.serviceCartData});
+class RestaurentsDetails extends StatefulWidget {
+  const RestaurentsDetails({super.key});
 
   @override
-  State<HomeServicesCart> createState() => _HomeServicesCartState();
+  State<RestaurentsDetails> createState() => _RestaurentsDetailsState();
 }
 
-class _HomeServicesCartState extends State<HomeServicesCart> {
-  CategoriesController categoriesController = Get.put(CategoriesController());
-  final List<String> days = List.generate(10, (index) => "Wed ${27 + index}");
+class _RestaurentsDetailsState extends State<RestaurentsDetails>
+    with TickerProviderStateMixin {
+  final HospitalController controller = Get.put(HospitalController());
+  late TabController tabController;
+
+     final List<String> days = List.generate(10, (index) => "Wed ${27 + index}");
   final List<String> times = [
     "01:30 PM",
     "02:00 PM",
@@ -31,364 +25,20 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
     "03:30 PM",
     "04:00 PM",
   ];
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: backGroundColor,
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
-          ),
-          title: Text(
-            'cart'.tr,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 1,
-          actions: [
-            Icon(Icons.star, color: Colors.black),
-            SizedBox(width: 10),
-            Icon(Icons.share, color: Colors.black),
-            SizedBox(width: 10),
-          ],
-        ),
-        body:ListView.builder(
-          itemCount: widget.serviceCartData.length,
-          itemBuilder: (context, index) {
-            final cartData = widget.serviceCartData[index];
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        blurRadius: 6,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('${categoriesController.subcategoryName}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.currency_rupee,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                '${cartData.basePrice}', // Static amount
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              // Text(
-                              //   '3000', // Static amount
-                              //   style: TextStyle(
-                              //     fontSize: 16,
-                              //     fontWeight: FontWeight.w700,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-
-                          Text(
-                            '${cartData.name}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Poppins',
-                              fontSize: 14,
-                            ),
-                          ),
-                          // Text(
-                          //   'Canwinn arogya dham hospital',
-                          //   style: TextStyle(
-                          //     fontWeight: FontWeight.w400,
-                          //     fontFamily: 'Poppins',
-                          //     fontSize: 14,
-                          //   ),
-                          // ),
-                          Spacer(),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(width: 1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    context.read<CounterBlock>().add(Decrements());
-                                  },
-                                  child: Icon(Icons.remove),
-                                ),
-                                BlocBuilder<CounterBlock , CounterStates>(builder: (context, state) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 15,
-                                    ),
-                                    child: Text(state.count.toString(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  );
-                                },),
-                                GestureDetector(
-                                  onTap: () {
-                                    context.read<CounterBlock>().add(Increments());
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 15),
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(Icons.call),
-                      Text(
-                        'Verified Customer, +91-6377824837',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        'Change',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        blurRadius: 6,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: Icon(Icons.star, color: primaryColor),
-                        title: Text(
-                          'Apply Coupon',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        subtitle: Text('Unlock offers with coupon codes'),
-                        trailing: Text(
-                          'Apply',
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Bill Details',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Voucher amount (1)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.currency_rupee,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                '5000', // Static amount
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Service Fee & Tax',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            '49 Free',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: Colors.red,
-                              decorationThickness: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      Divider(thickness: 1),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total Payable',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            '700',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },),
-        // bottomNavigationBar: InkWell(
-        //   onTap: (){
-        //     Get.to( CustomHomeServiceWidgets(context));
-        //   },
-        //   child: Container(
-        //     color: primaryColor,
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Padding(
-        //           padding: const EdgeInsets.all(15.0),
-        //           child: Text(
-        //             'add_address'.tr,
-        //             style: TextStyle(
-        //               fontSize: 16,
-        //               fontWeight: FontWeight.w600,
-        //               color: white,
-        //             ),
-        //           ),
-        //         ),
-        //        Icon(Icons.navigate_next_outlined, color: Colors.white),
-
-        //       ],
-        //     ),
-        //   ),
-        // ),
-      
+          
         bottomNavigationBar: SafeArea(
   child: SizedBox(
     height: 60,
@@ -419,12 +69,429 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
 ),
 
       
-      
+        backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          backgroundColor: backGroundColor,
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            "Burger Hut",
+            style: TextStyle(
+              fontFamily: 'Raleway',
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.black87),
+            onPressed: () => Get.back(),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.favorite_border, color: Colors.black87),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.share, color: Colors.black87),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            // --------- HEADER CARD ----------
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            "Burger",
+                            style: TextStyle(
+                              fontFamily: 'Raleway',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.blueAccent, width: 1.5),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blue.withOpacity(0.1),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.call, size: 18, color: Colors.blueAccent),
+                                SizedBox(width: 6),
+                                Text(
+                                  "Call",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.blueAccent,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Obx(
+                        () => DropdownButtonFormField<String>(
+                          value: controller.selectedLocation.value.isEmpty
+                              ? null
+                              : controller.selectedLocation.value,
+                          decoration: InputDecoration(
+                            hintText: "Select Location",
+                            filled: true,
+                            fillColor: Colors.grey[200],
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                          ),
+                          items: controller.locations.map((location) {
+                            return DropdownMenuItem<String>(
+                              value: location,
+                              child: Text(location),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            if (value != null) {
+                              controller.changeLocation(value);
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: const [
+                          Icon(Icons.star, color: Colors.amber, size: 20),
+                          SizedBox(width: 8),
+                          Text(
+                            '4.76',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            '(11.1M bookings)',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            // --------- TABBAR ----------
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.white, Colors.grey[200]!],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: TabBar(
+                controller: tabController,
+                indicator: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blueAccent, Colors.blue[700]!],
+                  ),
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(color: Colors.blueAccent, width: 2),
+                ),
+                dividerColor: Colors.transparent,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.grey[600],
+                labelStyle: const TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+                unselectedLabelStyle: const TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                tabs: [
+                  Tab(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(color: Colors.blueAccent, width: 1),
+                      ),
+                      child: const Text("Menu"),
+                    ),
+                  ),
+                  Tab(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(color: Colors.blueAccent, width: 1),
+                      ),
+                      child: const Text("Reviews"),
+                    ),
+                  ),
+                ],
+                padding: const EdgeInsets.symmetric(vertical: 8),
+              ),
+            ),
+
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 3,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Burger Item ${index + 1}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star,
+                                              color: Colors.amber[700], size: 16),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '4.76 Ratings',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[600],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '₹4500',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[600],
+                                              decoration: TextDecoration.lineThrough,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            '₹3000',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.green[700],
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'All Days',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[600],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Crispy Aloo Patty with onion & delicious mayonnaise.',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey[600],
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                
+                                Column(
+                                  children: [
+                                        Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    image: DecorationImage(
+                                      image: AssetImage(burggerImage),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                 SizedBox(height: 5,),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.purple[700],
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                      ),
+                                      child: const Text(
+                                        "Add",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  // ------------------ REVIEWS TAB ------------------
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: ListView.builder(
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 3,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.amber,
+                                  child: Icon(Icons.person, color: Colors.white, size: 30),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'User ${index + 1}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star, color: Colors.amber[700], size: 16),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '4.5',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[600],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Great taste and fast delivery!',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[600],
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Future<dynamic> CustomHomeServiceWidgets(BuildContext context) {
+   Future<dynamic> CustomHomeServiceWidgets(BuildContext context) {
     return showModalBottomSheet(
                   context: context,
                   backgroundColor: Colors.transparent,

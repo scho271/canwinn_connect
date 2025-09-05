@@ -5,6 +5,7 @@ import 'package:canwinn_project/View/doctor_appoiments/doctor_appoiments_widgets
 import 'package:canwinn_project/View/emgrency_contacts/emagrency_widgets/emagrency_widgets.dart';
 import 'package:canwinn_project/View/hospital_near_me/hospital_near_me.dart';
 import 'package:canwinn_project/View/medical_services/widgets/medical_service_widgets.dart';
+import 'package:canwinn_project/View/restaurents/restaurents_home.dart';
 import 'package:canwinn_project/View/widgets/membership_registers.dart';
 import 'package:canwinn_project/View/widgets/searchbar.dart';
 import 'package:canwinn_project/Constants/color_constants.dart';
@@ -241,7 +242,9 @@ class _DashboardState extends State<Dashboard> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Get.to(RestaurentsHomeScreens());
+                                            },
                                             child: CircleAvatar(
                                               radius: 30.sp,
                                               backgroundColor: Colors.white,
