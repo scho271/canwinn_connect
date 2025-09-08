@@ -5,8 +5,12 @@ import 'package:canwinn_project/View/doctor_appoiments/doctor_appoiments.dart';
 import 'package:canwinn_project/View/health_care/health_care.dart';
 import 'package:canwinn_project/ViewModel/Controller/get_services_controller.dart';
 import 'package:canwinn_project/ViewModel/Controller/hospital_controller.dart' show HospitalController;
+import 'package:canwinn_project/blocks/fetch_servicelist/fetch_service_list_states.dart';
+import 'package:canwinn_project/blocks/fetch_servicelist/fetch_services_list_bloc.dart';
+import 'package:canwinn_project/blocks/fetch_servicelist/fetch_serviceslist_event.dart';
 import 'package:canwinn_project/res/api_url/app_api_url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class ServicesScreen extends StatefulWidget {
@@ -22,7 +26,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   void initState() {
    getServicesController.fetchServiceList();
-    super.initState();
+   context.read<ServiceListBloc>().add(FetchServiceList());
+   super.initState();
   }
 
   @override
@@ -205,73 +210,134 @@ class _ServicesScreenState extends State<ServicesScreen> {
               ),
               const SizedBox(height: 12),
 
-              Obx(() {
-                if (getServicesController.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+              BlocBuilder<ServiceListBloc, FetchServiceListStates>(
+                builder: (context, state) {
 
-                if (getServicesController.serviceList.isEmpty) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/images/service_his.png'),
-                      const Text(
-                        "No Services yet.",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        'Looks like you haven’t experienced\n quality services at home',
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  );
-                }
 
-                return SizedBox(
-                  height: 150,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: getServicesController.serviceList.length,
-                    itemBuilder: (context, index) {
-                      final data = getServicesController.serviceList[index];
-                      return InkWell(
+
+                  if (state.fetch.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/images/service_his.png'),
+                        const Text(
+                          "No Services yet.",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Text(
+                          'Looks like you haven’t experienced\n quality services at home',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    );
+                  }
+
+                  return SizedBox(
+                    height: 150,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.fetch.length,
+                      itemBuilder: (context, index) {
+                        final data = state.fetch[index];
+                        return InkWell(
                           onTap: () {
-                            // Get.to(() =>HealthCare());
-                            // Get.to(() => ServicesDetails(service: data));
-                           if(data.id==10){
-                             Get.to(() =>HealthCare());
-                           }else if(data.id ==11){
-                             Get.to(()=>DoctorAppointmentScreen());
-                           }else if(data.id ==12){
-                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Click on the id 12"),shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(10)
-                             ),backgroundColor: Colors.green,));
-
-                           }else if(data.id==13){
-                             // Get.to(()=>ApplianceRepair());
-                           }
-                           else if(data.id ==14){
-                             // Get.to(()=>ApplianceRepair());
-                           }
+                            if (data.id == 10) {
+                              Get.to(() => HealthCare());
+                            } else if (data.id == 11) {
+                              Get.to(() => DoctorAppointmentScreen());
+                            } else if (data.id == 12) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Click on the id 12"),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            } else if (data.id == 13) {
+                              // Get.to(()=>ApplianceRepair());
+                            } else if (data.id == 14) {
+                              // Get.to(()=>ApplianceRepair());
+                            }
                           },
-                          child: _buildServiceCard(data.name, AppApiUrl.imagebaseUrl+ data.image.toString()));
-                    },
-                  ),
-                );
-              }),
+                          child: _buildServiceCard(
+                            data.name.toString(),
+                            AppApiUrl.imagebaseUrl + (data.image ?? ''),
+                          ),
+                        );
+                      },
+                    ),
+                  );
 
-              // SizedBox(
-              //   height: 120,
-              //   child: ListView(
-              //     scrollDirection: Axis.horizontal,
-              //     children: [
-              //       _buildServiceCard('Healthcare', wellNessHealthLettring),
-              //       _buildServiceCard('Appliance Repair', wellNessHealthLettring),
-              //       _buildServiceCard('Salon', wellNessHealthLettring),
-              //     ],
-              //   ),
-              // ),
+                  // initial state
+                  return const SizedBox.shrink();
+                },
+              ),
+
+
+
+
+
+
+              // Obx(() {
+              //   if (getServicesController.isLoading.value) {
+              //     return const Center(child: CircularProgressIndicator());
+              //   }
+              //
+              //   if (getServicesController.serviceList.isEmpty) {
+              //     return Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Image.asset('assets/images/service_his.png'),
+              //         const Text(
+              //           "No Services yet.",
+              //           style: TextStyle(fontWeight: FontWeight.bold),
+              //         ),
+              //         const Text(
+              //           'Looks like you haven’t experienced\n quality services at home',
+              //           textAlign: TextAlign.center,
+              //         ),
+              //       ],
+              //     );
+              //   }
+              //
+              //   return SizedBox(
+              //     height: 150,
+              //     child: ListView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: getServicesController.serviceList.length,
+              //       itemBuilder: (context, index) {
+              //         final data = getServicesController.serviceList[index];
+              //         return InkWell(
+              //             onTap: () {
+              //               // Get.to(() =>HealthCare());
+              //               // Get.to(() => ServicesDetails(service: data));
+              //              if(data.id==10){
+              //                Get.to(() =>HealthCare());
+              //              }else if(data.id ==11){
+              //                Get.to(()=>DoctorAppointmentScreen());
+              //              }else if(data.id ==12){
+              //                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Click on the id 12"),shape: RoundedRectangleBorder(
+              //                    borderRadius: BorderRadius.circular(10)
+              //                ),backgroundColor: Colors.green,));
+              //
+              //              }else if(data.id==13){
+              //                // Get.to(()=>ApplianceRepair());
+              //              }
+              //              else if(data.id ==14){
+              //                // Get.to(()=>ApplianceRepair());
+              //              }
+              //             },
+              //             child: _buildServiceCard(data.name, AppApiUrl.imagebaseUrl+ data.image.toString()));
+              //       },
+              //     ),
+              //   );
+              // }),
+
+             
               const SizedBox(height: 20),
               const Text(
                 'Trending Offers',

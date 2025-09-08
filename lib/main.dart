@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'blocks/fetch_servicelist/fetch_services_list_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageHelper.initialize();
@@ -23,17 +25,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CounterBlock(),
-      child: ScreenUtilInit(
-        designSize: const Size(360, 760),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
-          getPages: AppRoutes.openRoutes(),
-          translations: Language(),
-          locale: const Locale('en', 'US'),
-          fallbackLocale: const Locale('en', 'US'),
+      child: BlocProvider(
+        create: (context) => ServiceListBloc(),
+        child: ScreenUtilInit(
+          designSize: const Size(360, 760),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(),
+            getPages: AppRoutes.openRoutes(),
+            translations: Language(),
+            locale: const Locale('en', 'US'),
+            fallbackLocale: const Locale('en', 'US'),
+          ),
         ),
       ),
     );
