@@ -56,133 +56,120 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
             SizedBox(width: 10),
           ],
         ),
-        body:ListView.builder(
+
+        body: ListView.builder(
           itemCount: widget.serviceCartData.length,
+          padding: const EdgeInsets.all(16),
           itemBuilder: (context, index) {
             final cartData = widget.serviceCartData[index];
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 🔹 Service Card
                 Container(
                   padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        blurRadius: 6,
-                        offset: Offset(0, 3),
+                        color: Colors.black12.withOpacity(0.05),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Title & Price
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('${categoriesController.subcategoryName}',
-                            style: TextStyle(
+                          Text(
+                            '${categoriesController.subcategoryName}',
+                            style: const TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
                               fontSize: 16,
+                              fontFamily: 'Poppins',
                             ),
                           ),
                           Row(
                             children: [
-                              Icon(
-                                Icons.currency_rupee,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 4),
+                              const Icon(Icons.currency_rupee, size: 18, color: Colors.black),
                               Text(
-                                '${cartData.basePrice}', // Static amount
-                                style: TextStyle(
+                                '${cartData.basePrice ?? "0"}',
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
+                                  fontFamily: 'Poppins',
                                 ),
                               ),
-                              // Text(
-                              //   '3000', // Static amount
-                              //   style: TextStyle(
-                              //     fontSize: 16,
-                              //     fontWeight: FontWeight.w700,
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 8),
+
+                      // Subtitle + Counter
                       Row(
                         children: [
-
-                          Text(
-                            '${cartData.name}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Poppins',
-                              fontSize: 14,
+                          Expanded(
+                            child: Text(
+                              '${cartData.name}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                color: Colors.black87,
+                              ),
                             ),
                           ),
-                          // Text(
-                          //   'Canwinn arogya dham hospital',
-                          //   style: TextStyle(
-                          //     fontWeight: FontWeight.w400,
-                          //     fontFamily: 'Poppins',
-                          //     fontSize: 14,
-                          //   ),
-                          // ),
-                          Spacer(),
                           Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 5,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(width: 1),
+                              color: Colors.grey.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey.shade300, width: 1),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
+                                  color: Colors.black12.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
                                 ),
                               ],
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
                                   onTap: () {
                                     context.read<CounterBlock>().add(Decrements());
                                   },
-                                  child: Icon(Icons.remove),
+                                  child: const Icon(Icons.remove_circle,
+                                      color: Colors.redAccent, size: 22),
                                 ),
-                                BlocBuilder<CounterBlock , CounterStates>(builder: (context, state) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 15,
-                                    ),
-                                    child: Text(state.count.toString(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                BlocBuilder<CounterBlock, CounterStates>(
+                                  builder: (context, state) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      child: Text(
+                                        state.count.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },),
+                                    );
+                                  },
+                                ),
                                 GestureDetector(
                                   onTap: () {
                                     context.read<CounterBlock>().add(Increments());
                                   },
-                                  child: Icon(Icons.add),
+                                  child: const Icon(Icons.add_circle,
+                                      color: Colors.green, size: 22),
                                 ),
                               ],
                             ),
@@ -192,31 +179,41 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+
                 Container(
-                  width: double.infinity,
-                  height: 100,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                   decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [Colors.white, Colors.grey.shade100],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
+                        color: Colors.black12.withOpacity(0.05),
+                        blurRadius: 6,
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Icon(Icons.call),
-                      Text(
-                        'Verified Customer, +91-6377824837',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.green.withOpacity(0.1),
+                        child: const Icon(Icons.call, color: Colors.green),
+                      ),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Text(
+                          'Verified Customer, +91-6377824837',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                       Text(
@@ -224,24 +221,23 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
                         style: TextStyle(
                           color: primaryColor,
                           fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: Colors.black12.withOpacity(0.05),
                         blurRadius: 6,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -250,26 +246,29 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
                     children: [
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: Icon(Icons.star, color: primaryColor),
-                        title: Text(
+                        leading: Icon(Icons.local_offer, color: primaryColor),
+                        title: const Text(
                           'Apply Coupon',
                           style: TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
                           ),
                         ),
-                        subtitle: Text('Unlock offers with coupon codes'),
+                        subtitle: const Text('Unlock offers with coupon codes'),
                         trailing: Text(
                           'Apply',
                           style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            fontSize: 17
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Text(
+                      const Divider(thickness: 1, height: 28),
+
+                      const Text(
                         'Bill Details',
                         style: TextStyle(
                           fontSize: 16,
@@ -277,67 +276,42 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Voucher amount (1)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.currency_rupee,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                '5000', // Static amount
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
+                        children: const [
+                          Text('Voucher amount (1)',
+                              style:
+                              TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                          Text('₹5000',
+                              style:
+                              TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                         ],
                       ),
+                      const SizedBox(height: 6),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Service Fee & Tax',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                          ),
+                        children: const [
+                          Text('Service Fee & Tax',
+                              style:
+                              TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                           Text(
                             '49 Free',
                             style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red,
                               decoration: TextDecoration.lineThrough,
-                              decorationColor: Colors.red,
-                              decorationThickness: 1.5,
                             ),
                           ),
                         ],
                       ),
-
-                      Divider(thickness: 1),
+                      const Divider(thickness: 1, height: 28),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Total Payable',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
@@ -346,22 +320,36 @@ class _HomeServicesCartState extends State<HomeServicesCart> {
                             ),
                           ),
                           Text(
-                            '700',
+                            '₹700',
                             style: TextStyle(
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
                               fontFamily: 'Poppins',
-                              fontSize: 16,
+                              fontSize: 18,
+                              color: primaryColor,
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'You saved ₹100',
+                        style: TextStyle(
+                          color: Colors.green.shade600,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ],
-            ),
-          );
-        },),
+            );
+          },
+        ),
+
+
+
+
         // bottomNavigationBar: InkWell(
         //   onTap: (){
         //     Get.to( CustomHomeServiceWidgets(context));

@@ -25,26 +25,21 @@ class _RestaurentsDetailsState extends State<RestaurentsDetails>
     "03:30 PM",
     "04:00 PM",
   ];
-
-
-
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
   }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          
         bottomNavigationBar: SafeArea(
   child: SizedBox(
     height: 60,
     child: InkWell(
       onTap: () {
-        CustomHomeServiceWidgets(context); // Function call on tap
+        CustomHomeServiceWidgets(context);
       },
       child: Container(
         color: primaryColor,
@@ -100,7 +95,6 @@ class _RestaurentsDetailsState extends State<RestaurentsDetails>
         ),
         body: Column(
           children: [
-            // --------- HEADER CARD ----------
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Card(
@@ -150,26 +144,20 @@ class _RestaurentsDetailsState extends State<RestaurentsDetails>
                         ],
                       ),
                       const SizedBox(height: 12),
-                      Obx(
-                        () => DropdownButtonFormField<String>(
-                          value: controller.selectedLocation.value.isEmpty
-                              ? null
+                      Obx(() => DropdownButtonFormField<String>(
+                          value: controller.selectedLocation.value.isEmpty ? null
                               : controller.selectedLocation.value,
                           decoration: InputDecoration(
                             hintText: "Select Location",
                             filled: true,
-                            fillColor: Colors.grey[200],
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.grey[300]!),
-                            ),
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
                           ),
+                          dropdownColor: Colors.white,
                           items: controller.locations.map((location) {
                             return DropdownMenuItem<String>(
                               value: location,
@@ -181,8 +169,8 @@ class _RestaurentsDetailsState extends State<RestaurentsDetails>
                               controller.changeLocation(value);
                             }
                           },
-                        ),
-                      ),
+                        ),),
+
                       const SizedBox(height: 12),
                       Row(
                         children: const [
@@ -212,20 +200,22 @@ class _RestaurentsDetailsState extends State<RestaurentsDetails>
               ),
             ),
 
-            // --------- TABBAR ----------
             Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.white, Colors.grey[200]!],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withOpacity(0.25),
                     spreadRadius: 2,
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -235,253 +225,359 @@ class _RestaurentsDetailsState extends State<RestaurentsDetails>
                   gradient: LinearGradient(
                     colors: [Colors.blueAccent, Colors.blue[700]!],
                   ),
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(color: Colors.blueAccent, width: 2),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueAccent.withOpacity(0.3),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
+                indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.grey[600],
+                unselectedLabelColor: Colors.grey[700],
                 labelStyle: const TextStyle(
                   fontFamily: 'Raleway',
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
                 unselectedLabelStyle: const TextStyle(
                   fontFamily: 'Raleway',
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
-                tabs: [
-                  Tab(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.blueAccent, width: 1),
-                      ),
-                      child: const Text("Menu"),
-                    ),
-                  ),
-                  Tab(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.blueAccent, width: 1),
-                      ),
-                      child: const Text("Reviews"),
-                    ),
-                  ),
+                tabs: const [
+                  Tab(text: "Store Visit"),
+                  Tab(text: "Delivery"),
                 ],
-                padding: const EdgeInsets.symmetric(vertical: 8),
               ),
             ),
+
 
             Expanded(
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 3,
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.15),
+                            spreadRadius: 2,
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Title and Badge
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const SizedBox(width: 12),
                                 Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Burger Item ${index + 1}',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.star,
-                                              color: Colors.amber[700], size: 16),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            '4.76 Ratings',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '₹4500',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[600],
-                                              decoration: TextDecoration.lineThrough,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            '₹3000',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.green[700],
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            'All Days',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Crispy Aloo Patty with onion & delicious mayonnaise.',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[600],
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
+                                  child: Text(
+                                    'Foam Jet Services',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(width: 12),
-                                
-                                Column(
-                                  children: [
-                                        Container(
-                                  width: 70,
-                                  height: 70,
+                                Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    image: DecorationImage(
-                                      image: AssetImage(burggerImage),
-                                      fit: BoxFit.cover,
+                                    gradient: LinearGradient(
+                                      colors: [Colors.deepPurple, Colors.purpleAccent],
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(16),
+                                      bottomLeft: Radius.circular(12),
+                                    ),
+                                  ),
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  child: Text(
+                                    "Save 7%",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                 SizedBox(height: 5,),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.purple[700],
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 8),
-                                      ),
-                                      child: const Text(
-                                        "Add",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                              ],
+                            ),
+
+                            SizedBox(height: 8),
+
+                            // Description
+                            Text(
+                              'Defects infections & anemia',
+                              style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                            ),
+
+                            SizedBox(height: 8),
+
+                            // Ratings
+                            Row(
+                              children: [
+                                Icon(Icons.star, color: Colors.amber, size: 16),
+                                SizedBox(width: 4),
+                                Text(
+                                  '4.76 (11.1M bookings)',
+                                  style: TextStyle(color: Colors.grey[600], fontSize: 13),
                                 ),
                               ],
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
 
-                  // ------------------ REVIEWS TAB ------------------
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 3,
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            SizedBox(height: 12),
+
+                            // Price and Add button
+                            Row(
                               children: [
-                                const CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.amber,
-                                  child: Icon(Icons.person, color: Colors.white, size: 30),
+                                Text(
+                                  "₹3000",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87),
                                 ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'User ${index + 1}',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black87,
+                                SizedBox(width: 8),
+                                Text(
+                                  "₹3000",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                                ),
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey[300]!),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        blurRadius: 4,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(8),
+                                      onTap: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                        child: Text(
+                                          "Add",
+                                          style: TextStyle(
+                                              color: Colors.deepPurple,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      const SizedBox(height: 4),
-                                      Row(
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+
+
+
+
+                Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 4,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              const Text(
+                                "Recommended",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 3,
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Burger Item ${index + 1}',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.star,
+                                                    color: Colors.amber[700], size: 16),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  '4.76 Ratings',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  '₹4500',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.grey[600],
+                                                    decoration: TextDecoration.lineThrough,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  '₹3000',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.green[700],
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'All Days',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              'Crispy Aloo Patty with onion & delicious mayonnaise.',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600],
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+
+                                      Column(
                                         children: [
-                                          Icon(Icons.star, color: Colors.amber[700], size: 16),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            '4.5',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[600],
+                                          Container(
+                                            width: 70,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(12),
+                                              image: DecorationImage(
+                                                image: AssetImage(burggerImage),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.purple[700],
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 12, vertical: 8),
+                                            ),
+                                            child: const Text(
+                                              "Add",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Great taste and fast delivery!',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[600],
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  ),
+                  )
+
+
+
+
                 ],
               ),
             ),

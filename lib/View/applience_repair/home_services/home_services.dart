@@ -314,8 +314,6 @@ class _HomeServicesState extends State<HomeServices> {
                                       ],
                                     ),
                                   ),
-
-
                                   Obx(() => Theme(
                                     data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                                     child: ExpansionTile(

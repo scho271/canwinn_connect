@@ -246,11 +246,10 @@ class DoctorsAppointmentPage extends StatelessWidget {
             padding: const EdgeInsets.all(14.0),
             child: Column(
               children: [
-                // 🔎 Search Box
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black12,
@@ -286,12 +285,9 @@ class DoctorsAppointmentPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-
-                // ✅ TabBarView Expanded में wrap
                 Expanded(
                   child: TabBarView(
                     children: [
-                      // First Tab (Clinic Appointment List)
                       ListView(
                         children: [
                           buildDoctorCard(
@@ -465,38 +461,32 @@ Widget buildDoctorCard({
         const SizedBox(height: 14),
         SizedBox(
           width: double.infinity,
+          height: 55,
           child: ElevatedButton(
             onPressed: () {
               Get.to(const DoctorProfileScreen());
             },
             style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
+              backgroundColor: Colors.deepPurple,
+              foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
-            ).copyWith(
-              backgroundColor: MaterialStateProperty.all(Colors.transparent),
+              elevation: 4,
+              padding: const EdgeInsets.symmetric(vertical: 14),
             ),
-            child: Ink(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Colors.purple, Colors.deepPurpleAccent],
-                ),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                child: const Text(
-                  "Book Appointment",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+            child: const Text(
+              "Book Appointment",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
               ),
             ),
           ),
-        ),
+        )
+
+
       ],
     ),
   );
