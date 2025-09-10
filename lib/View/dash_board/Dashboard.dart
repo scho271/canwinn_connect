@@ -11,16 +11,13 @@ import 'package:canwinn_project/View/widgets/searchbar.dart';
 import 'package:canwinn_project/Constants/color_constants.dart';
 import 'package:canwinn_project/View/membership/membership_from.dart';
 import 'package:canwinn_project/ViewModel/Controller/category_filter_controller.dart';
-import 'package:canwinn_project/blocks/fetch_servicelist/fetch_services_list_bloc.dart';
 import 'package:canwinn_project/domain/repositories/search_repository.dart';
 import 'package:canwinn_project/res/api_url/app_api_url.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
-import '../../blocks/fetch_servicelist/fetch_serviceslist_event.dart';
 
 
 
@@ -36,11 +33,7 @@ class _DashboardState extends State<Dashboard> {
   TextEditingController searchController = TextEditingController();
   SearchRepository searchRepository = Get.put(SearchRepository());
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // context.read<ServiceListBloc>().add(FetchServiceList());
-  }
+
 
   @override
   Widget build(BuildContext context) {

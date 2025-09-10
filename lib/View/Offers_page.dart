@@ -1,11 +1,9 @@
 import 'package:canwinn_project/Constants/color_constants.dart';
 import 'package:canwinn_project/Constants/image_constants.dart';
-import 'package:canwinn_project/View/services/Service_page.dart';
+import 'package:canwinn_project/ViewModel/Controller/hospital_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../ViewModel/Controller/hospital_controller.dart';
 
 class OffersScreen extends StatefulWidget {
   const OffersScreen({super.key});
@@ -90,8 +88,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   itemBuilder: (context, index) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child:
-                      Container(
+                      child: Container(
                         width: 250,
                         color: Colors.white,
                         child: Column(
@@ -167,8 +164,11 @@ class _OffersScreenState extends State<OffersScreen> {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Expires in 2 Days',
-                                style: TextStyle(color: Colors.grey),
+                                '⏰ Expires in 2 Days',
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),

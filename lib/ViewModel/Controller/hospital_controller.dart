@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 
 class HospitalController extends GetxController {
   var locations = ["Gurugram", "Delhi", "Mumbai", "Bangalore", "Kolkata"];
-  var filters = ["Near Me", "Open", "Top Rated", "Emergency"];
+  var filters = ["Near Me", "Open 24x7", "Rating", "Private"];
 
   RxString selectedLocation = "Gurugram".obs;
   RxString selectedFilter = "Near Me".obs;
-  RxBool isSelected= true.obs;
+  RxBool isSelected= false.obs;
 
   void changeLocation(String value) {
     selectedLocation.value = value;

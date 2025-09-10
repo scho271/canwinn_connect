@@ -1,4 +1,4 @@
-// find_doctor_sheet.dart
+import 'package:canwinn_project/View/DcotorInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'DoctorController.dart';
@@ -47,9 +47,9 @@ class FindDoctorSheet extends StatelessWidget {
               return ListTile(
                 title: Text(controller.filteredServices[index]),
                 onTap: () {
-                  // Handle tap action
+                  Get.to(const DoctorsAppointmentPage());
+
                   print('Selected: ${controller.filteredServices[index]}');
-                  Get.back();
                 },
               );
             },

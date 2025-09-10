@@ -1,6 +1,5 @@
-
-
 import 'package:canwinn_project/View/Splash.dart';
+import 'package:canwinn_project/bloc/sliders/sliders_bloc.dart';
 import 'package:canwinn_project/block/counter_block.dart';
 import 'package:canwinn_project/helper/storage_helper.dart';
 import 'package:canwinn_project/res/localizations/language.dart';
@@ -27,17 +26,20 @@ class MyApp extends StatelessWidget {
       create: (context) => CounterBlock(),
       child: BlocProvider(
         create: (context) => ServiceListBloc(),
-        child: ScreenUtilInit(
-          designSize: const Size(360, 760),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          child: GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
-            getPages: AppRoutes.openRoutes(),
-            translations: Language(),
-            locale: const Locale('en', 'US'),
-            fallbackLocale: const Locale('en', 'US'),
+        child: BlocProvider(
+          create: (context) => SlidersBloc(),
+          child: ScreenUtilInit(
+            designSize: const Size(360, 760),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            child: GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: SplashScreen(),
+              getPages: AppRoutes.openRoutes(),
+              translations: Language(),
+              locale: const Locale('en', 'US'),
+              fallbackLocale: const Locale('en', 'US'),
+            ),
           ),
         ),
       ),

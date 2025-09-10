@@ -36,41 +36,38 @@ class _ServicesScreenState extends State<ServicesScreen> {
       child: Scaffold(
         backgroundColor: backGroundColor,
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  IconButton(onPressed: (){
-                    Get.back();
-                  }, icon: Icon(Icons.arrow_back_ios_rounded)),
+                  IconButton(
+                    onPressed: () => Get.back(),
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+                  ),
                   const Text(
                     'Services',
                     style: TextStyle(
-                      color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 20,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   CircleAvatar(
-                    backgroundColor: white,
-                    child: IconButton(
-                      icon:  Icon(
-                        Icons.notifications,
-                        color: primaryColor,
-                      ),
-                      onPressed: () {},
-                    ),
+                    backgroundColor: primaryColor.withOpacity(0.1),
+                    child: Icon(Icons.notifications, color: primaryColor),
                   ),
                 ],
               ),
+
+              const SizedBox(height: 12),
               Row(
                 children: [
                   const Icon(Icons.location_on, color: Colors.red),
                   const SizedBox(width: 6),
-                  Expanded(child: Obx(() => DropdownButton<String>(
+                  Expanded(
+                    child: Obx(() => DropdownButton<String>(
                       value: controller.selectedLocation.value.isNotEmpty
                           ? controller.selectedLocation.value
                           : null,
@@ -92,276 +89,261 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+
+              const SizedBox(height: 16),
               const TextField(
                 decoration: InputDecoration(
                   hintText: 'Explore services near you',
                   prefixIcon: Icon(Icons.search),
                   filled: true,
                   fillColor: Colors.white,
+                  contentPadding: EdgeInsets.symmetric(vertical: 14),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderRadius: BorderRadius.all(Radius.circular(14)),
                     borderSide: BorderSide.none,
                   ),
                 ),
               ),
+
               const SizedBox(height: 20),
-             Obx(() => controller.isSelected.value? Container(
-               decoration: BoxDecoration(
-                   color: Colors.white,
-                   borderRadius: BorderRadius.circular(10)
-               ),
-               child: ListTile(
-                 title: Text('Your Booked Services' , style: TextStyle(fontWeight: FontWeight.bold),),
-                 subtitle: Text('View and manage your bookings'),
-                 trailing: TextButton(
-                   onPressed: () {},
-                   child: Row(
-                     mainAxisSize: MainAxisSize.min,
-                     children: [
-                       Text('View All',style: TextStyle(
-                           fontWeight: FontWeight.bold,
-                           fontSize: 18,
-                           fontFamily: 'Raleway'
-                       ),),
-                       SizedBox(width: 4),
-                       Icon(Icons.arrow_forward_ios_rounded,size: 20,),
-                     ],
-                   ),
-                 ),
 
-               ),
-             ): Wrap(
-                   spacing: 6,
-                   children: controller.chipSelection.keys.map((chip) {
-                     return Obx(() => FilterChip(
-                       selected: controller.chipSelection[chip]!,
-                       onSelected: (val) {
-                         controller.toggleChip(chip, val);
-                       },
-                       label: Row(
-                         mainAxisSize: MainAxisSize.min,
-                         children: [
-                           Text(chip),
-                           const SizedBox(width: 5),
-                           const Icon(Icons.arrow_drop_down, size: 20),
-                         ],
-                       ),
-                     ));
-                   }).toList(),
-                 ),),
-              SizedBox(height: 20,),
+              Obx(() => controller.isSelected.value
+                  ? Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.12),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    // Left Accent
+                    Container(
+                      width: 5,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        gradient: const LinearGradient(
+                          colors: [Colors.blue, Colors.lightBlueAccent],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
 
-              //
-    //           Wrap(
-    //             spacing: 6,
-    //             children: [
-    //               FilterChip(
-    //               onSelected: (_) {}, label: Row(mainAxisSize: MainAxisSize.min,
-    //                children: const [
-    //       Text("Nearby Focus"),
-    //       SizedBox(width: 5),
-    //       Icon(Icons.arrow_drop_down, size: 20),
-    //     ],
-    //   ),
-    // ),
-    //               FilterChip(
-    //               onSelected: (_) {}, label: Row(mainAxisSize: MainAxisSize.min,
-    //     children: const [
-    //       Text("Distance"),
-    //       SizedBox(width: 5),
-    //       Icon(Icons.arrow_drop_down, size: 20),
-    //     ],
-    //   ),
-    // ),
-    //               FilterChip(
-    //                 onSelected: (_) {}, label: Row(mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   Text("Category"),
-    //                   SizedBox(width: 5),
-    //                   Icon(Icons.arrow_drop_down, size: 20),
-    //                 ],
-    //               ),
-    //               ),
-    //               FilterChip(
-    //                 onSelected: (_) {}, label: Row(mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   Text("Price Offers"),
-    //                   SizedBox(width: 5),
-    //                   Icon(Icons.arrow_drop_down, size: 20),
-    //                 ],
-    //               ),
-    //               ),
-    //               FilterChip(
-    //                 onSelected: (_) {}, label: Row(mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   Text("Ratings"),
-    //                   SizedBox(width: 5),
-    //                   Icon(Icons.arrow_drop_down, size: 20),
-    //                 ],
-    //               ),
-    //               ),
-    //
-    //             ],
-    //           ),
-              const Text(
-                'Popular Services',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
+                    // Text
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Your Booked Services",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            "View and manage your bookings",
+                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // View All Button
+                    InkWell(
+                      onTap: () {},
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade50,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: const [
+                            Text("View All",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(width: 4),
+                            Icon(Icons.arrow_forward_ios_rounded,
+                                size: 16, color: Colors.blue),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  : SizedBox(
+                height: 42,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: controller.chipSelection.keys.map((chip) {
+                    return Obx(() => Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: FilterChip(
+                        label: Text(chip),
+                        labelStyle: TextStyle(
+                          color: controller.chipSelection[chip]!
+                              ? Colors.white
+                              : Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        selected: controller.chipSelection[chip]!,
+                        selectedColor: Colors.blue,
+                        backgroundColor: Colors.grey.shade200,
+                        onSelected: (val) =>
+                            controller.toggleChip(chip, val),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: controller.chipSelection[chip]! ? 2 : 0,
+                      ),
+                    ));
+                  }).toList(),
+                ),
+              )),
+
+
+              const SizedBox(height: 24),
+              const Text("Popular Services",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               const SizedBox(height: 12),
 
               BlocBuilder<ServiceListBloc, FetchServiceListStates>(
                 builder: (context, state) {
-
-
-
                   if (state.fetch.isEmpty) {
                     return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset('assets/images/service_his.png'),
+                        Image.asset('assets/images/service_his.png', height: 140),
+                        const SizedBox(height: 10),
+                        const Text("No Services yet.",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                         const Text(
-                          "No Services yet.",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const Text(
-                          'Looks like you haven’t experienced\n quality services at home',
+                          "Looks like you haven’t experienced\n quality services at home",
                           textAlign: TextAlign.center,
                         ),
                       ],
                     );
                   }
-
                   return SizedBox(
-                    height: 150,
+                    height: 160,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.fetch.length,
                       itemBuilder: (context, index) {
                         final data = state.fetch[index];
-                        return InkWell(
-                          onTap: () {
-                            if (data.id == 10) {
-                              Get.to(() => HealthCare());
-                            } else if (data.id == 11) {
-                              Get.to(() => DoctorAppointmentScreen());
-                            } else if (data.id == 12) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Click on the id 12"),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  backgroundColor: Colors.green,
+                        return Container(
+                          width: 120,
+                          margin: const EdgeInsets.only(right: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.15),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.grey.shade100,
                                 ),
-                              );
-                            } else if (data.id == 13) {
-                              // Get.to(()=>ApplianceRepair());
-                            } else if (data.id == 14) {
-                              // Get.to(()=>ApplianceRepair());
-                            }
-                          },
-                          child: _buildServiceCard(
-                            data.name.toString(),
-                            AppApiUrl.imagebaseUrl + (data.image ?? ''),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    AppApiUrl.imagebaseUrl + (data.image ?? ''),
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, __, ___) => const Icon(
+                                      Icons.broken_image,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 6),
+                                child: Text(
+                                  data.name ?? "",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              )
+                            ],
                           ),
                         );
                       },
                     ),
                   );
-
-                  // initial state
-                  return const SizedBox.shrink();
                 },
               ),
 
-
-
-
-
-
-              // Obx(() {
-              //   if (getServicesController.isLoading.value) {
-              //     return const Center(child: CircularProgressIndicator());
-              //   }
-              //
-              //   if (getServicesController.serviceList.isEmpty) {
-              //     return Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-              //       children: [
-              //         Image.asset('assets/images/service_his.png'),
-              //         const Text(
-              //           "No Services yet.",
-              //           style: TextStyle(fontWeight: FontWeight.bold),
-              //         ),
-              //         const Text(
-              //           'Looks like you haven’t experienced\n quality services at home',
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ],
-              //     );
-              //   }
-              //
-              //   return SizedBox(
-              //     height: 150,
-              //     child: ListView.builder(
-              //       scrollDirection: Axis.horizontal,
-              //       itemCount: getServicesController.serviceList.length,
-              //       itemBuilder: (context, index) {
-              //         final data = getServicesController.serviceList[index];
-              //         return InkWell(
-              //             onTap: () {
-              //               // Get.to(() =>HealthCare());
-              //               // Get.to(() => ServicesDetails(service: data));
-              //              if(data.id==10){
-              //                Get.to(() =>HealthCare());
-              //              }else if(data.id ==11){
-              //                Get.to(()=>DoctorAppointmentScreen());
-              //              }else if(data.id ==12){
-              //                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Click on the id 12"),shape: RoundedRectangleBorder(
-              //                    borderRadius: BorderRadius.circular(10)
-              //                ),backgroundColor: Colors.green,));
-              //
-              //              }else if(data.id==13){
-              //                // Get.to(()=>ApplianceRepair());
-              //              }
-              //              else if(data.id ==14){
-              //                // Get.to(()=>ApplianceRepair());
-              //              }
-              //             },
-              //             child: _buildServiceCard(data.name, AppApiUrl.imagebaseUrl+ data.image.toString()));
-              //       },
-              //     ),
-              //   );
-              // }),
-
-             
-              const SizedBox(height: 20),
-              const Text(
-                'Trending Offers',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
+              const SizedBox(height: 24),
+              const Text("Trending Offers",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               const SizedBox(height: 12),
 
-              _buildOfferCard(
-                title: 'Get 20% off Dental Checkups',
-                subtitle:
-                'Get a comprehensive dental checkup at half price. Offer valid for new patients only.',
-                label: 'Limited Time',
-                image: limitedTime,
+              Container(
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.15),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4))
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text("Limited Time",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue)),
+                          SizedBox(height: 4),
+                          Text("Get 20% off Dental Checkups",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          SizedBox(height: 4),
+                          Text("Comprehensive checkup for new patients",
+                              style: TextStyle(color: Colors.grey)),
+                        ],
+                      ),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(limitedTime, width: 90, height: 90),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 12),
-
-              _buildOfferCard(
-                title: 'Free Home Repair Consultation',
-                subtitle:
-                'Get a free consultation for any home repair service. No obligation.',
-                label: 'New',
-                image: freeHomeConsultant,
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -369,63 +351,77 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  Widget _buildServiceCard(String title, String imageUrl) {
-    return Container(
-      width: 140,
-      margin: const EdgeInsets.only(right: 12),
+
+  Widget _buildServiceCard(String name, String imageUrl) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: 120,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 6,
-            spreadRadius: 1,
-            offset: const Offset(0, 3),
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: imageUrl.isNotEmpty
-                ? FadeInImage.assetNetwork(
-              placeholder: 'assets/images/img.png',
-              image: imageUrl,
-              height: 100,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              imageErrorBuilder: (context, error, stackTrace) => Container(
-                height: 100,
-                width: double.infinity,
-                color: Colors.grey.shade300,
-                child: const Icon(Icons.image_not_supported, size: 40),
+          // Image Container
+          Container(
+            height: 80,
+            width: 80,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.grey.shade100,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                          (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                      color: Colors.blue.shade300,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    Icons.broken_image,
+                    size: 40,
+                    color: Colors.grey.shade400,
+                  );
+                },
               ),
-            )
-                : Container(
-              height: 100,
-              width: double.infinity,
-              color: Colors.grey.shade300,
-              child: const Icon(Icons.image_not_supported, size: 40),
             ),
           ),
           const SizedBox(height: 8),
-          // Title with padding
+          // Service Name
           Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              name,
+              textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
             ),
           ),
-          const SizedBox(height: 8),
         ],
       ),
     );
@@ -452,9 +448,32 @@ class _ServicesScreenState extends State<ServicesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    label,
-                    style: const TextStyle(color: Colors.purple, fontSize: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Colors.blue, Colors.lightBlueAccent],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: const Offset(2, 4),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      label,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -481,6 +500,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
       ),
     );}
 }
+
 
 
 

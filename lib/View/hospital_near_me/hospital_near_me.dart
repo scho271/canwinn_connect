@@ -378,97 +378,45 @@ class _HospitalNearMeWidgetState extends State<HospitalNearMeWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Text(
-            //             "${widget.categoryName}",
-            //             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            //           ),
-            //           Obx(() => DropdownButtonFormField<String>(
-            //             value: controller.selectedLocation.value,
-            //             decoration: const InputDecoration(
-            //               border: InputBorder.none,
-            //               isDense: true,
-            //               contentPadding: EdgeInsets.zero,
-            //             ),
-            //             items: controller.locations.map((location) {
-            //               return DropdownMenuItem<String>(
-            //                 value: location,
-            //                 child: Text(location),
-            //               );
-            //             }).toList(),
-            //             onChanged: (value) {
-            //               if (value != null) {
-            //                 controller.changeLocation(value);
-            //               }
-            //             },
-            //           )),
-            //         ],
-            //       ),
-            //     ),
-            //     const Icon(Icons.notifications, color: Colors.black54),
-            //   ],
-            // ),
-            // const SizedBox(height: 12),
-            
-            // // Search
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: TextFormField(
-            //     decoration: InputDecoration(
-            //       filled: true,
-            //       fillColor: Colors.white,
-            //       prefixIcon: const Icon(Icons.search_rounded),
-            //       hintText: 'search_hospital'.tr,
-            //       contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-            //       border: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(12),
-            //         borderSide: BorderSide.none,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(height: 16),
-            
-            // // Filters
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: Text(
-            //     'filters'.tr,
-            //     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            //   ),
-            // ),
-            // const SizedBox(height: 8),
-            // Obx(() => SingleChildScrollView(
-            //   scrollDirection: Axis.horizontal,
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: Row(
-            //     children: controller.filters.map((filter) {
-            //       return Padding(
-            //         padding: const EdgeInsets.only(right: 8),
-            //         child: ChoiceChip(
-            //           label: Text(filter),
-            //           selected: controller.selectedFilter.value == filter,
-            //           onSelected: (val) {
-            //             controller.changeFilter(filter);
-            //           },
-            //           selectedColor: clockColor.withOpacity(0.2),
-            //           labelStyle: TextStyle(
-            //             color: controller.selectedFilter.value == filter ? clockColor : Colors.black,
-            //           ),
-            //           shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(12),
-            //           ),
-            //         ),
-            //       );
-            //     }).toList(),
-            //   ),
-            // )),
-            // const SizedBox(height: 16),
+
+
+
+            // Filters
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                'filters'.tr,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Obx(() => SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: controller.filters.map((filter) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      backgroundColor: Color(0xFFFFFFFF),
+                      label: Text(filter),
+                      selected: controller.selectedFilter.value == filter,
+                      onSelected: (val) {
+                        controller.changeFilter(filter);
+                      },
+                      selectedColor: Colors.grey.withOpacity(0.2),
+                      labelStyle: TextStyle(
+                        color: controller.selectedFilter.value == filter ? Colors.grey : Colors.black,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            )),
+            const SizedBox(height: 16),
 
             Obx(() {
               if (fetchServicesController.isLoading.value) {

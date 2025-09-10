@@ -24,12 +24,11 @@ class CustomDoctorServiceCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Image
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
               child: Image.asset(
                 imagePath,
-                height: 170,
+                height: 100,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
